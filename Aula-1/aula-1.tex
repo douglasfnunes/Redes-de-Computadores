@@ -1,0 +1,410 @@
+% Esse texto é propriedade de
+% Agosto de 2012
+% Author: Douglas Fabiano de Sousa Nunes 
+% Instituto Federal de Educação, Ciência e Tecnologia do Sul de Minas Gerais - IFSULDEMINAS
+%
+% 
+
+% Para impressão é só substituir
+%\documentclass[handout]{beamer}
+\documentclass{beamer}
+
+% Setup appearance:
+\usetheme{Darmstadt}
+\usefonttheme[onlylarge]{structurebold}
+\setbeamerfont*{frametitle}{size=\normalsize,series=\bfseries}
+\setbeamertemplate{navigation symbols}{}
+
+% Standard packages
+\usepackage[english,brazil]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{times}
+\usepackage[T1]{fontenc}
+%para usar figuras e cores no texto
+\usepackage{graphicx,color}
+
+
+% Setup TikZ
+\usepackage{tikz}
+\usetikzlibrary{arrows}
+\tikzstyle{block}=[draw opacity=0.7,line width=1.4cm]
+
+% Title
+\title{Sistemas Operacionais II}
+\author{Douglas Fabiano de Sousa Nunes}
+\institute{Instituto Federal de Educação, Ciência e Tecnologia do Sul de Minas Gerais - IFSULDEMINAS}
+\date{Curso Técnico em Informática - Módulo II, 2012}
+
+% The main document
+\begin{document}
+
+\begin{frame}
+  \titlepage
+  \begin{figure}
+   \centering
+   \includegraphics[width=1cm]{../../../imagens/logotipo}
+  \end{figure}
+\end{frame}
+
+\begin{frame}[t]{Sumário}
+  \tableofcontents
+\end{frame}
+
+\section{Introdução}
+  \begin{frame}
+    \begin{center}
+      \Large{\textcolor{green}{\textbf{INTRODUÇÃO}}}
+    \end{center}
+  \end{frame}
+  \subsection{O UNIX e sua Origem} 
+   \begin{frame}{UNIX}
+    Para começarmos a entender o que é UNIX preciso voltar alguns anos no tempo\dots \textcolor{blue}{cerca de 50-60!}
+    \begin{columns}
+      \begin{column}{5cm}
+	\begin{figure}
+	  \centering
+	  \includegraphics[width=5cm]{../../../imagens/primeiro_computador}
+	\end{figure}
+      \end{column}
+      \begin{column}{6cm}
+	\begin{itemize}
+	  \uncover<2->
+	  {\item Os computadores eram enormes \textcolor{blue}{(dimensões de uma casa e, às vezes, de um estádio de futebol)}}
+	  \uncover<3->
+	  {\item Cada fabricante tinha o seu próprio Sistema Operacional}
+	  \uncover<4->
+	  {\item Os \textit{softwares} eram de propósito específicos}
+	\end{itemize}
+      \end{column}
+    \end{columns}
+   \end{frame} 
+   
+   \begin{frame}[t]{UNIX}
+    Foi na tentativa de mudar essa realidade \textbf{[especificidade dos \textit{softwares}]} que surgiu o UNIX.
+    \begin{figure}
+      \centering
+      \includegraphics[scale=0.25]{../../../imagens/pdp-7}
+      \caption{PDP-7, a UNIX Genesis Machine, e os criadores do UNIX}
+    \end{figure}
+   \end{frame}
+  
+\section{A Filosofia do UNIX}
+  \begin{frame}
+     \begin{center}
+        \Large{\textcolor{green}{\textbf{A FILOSOFIA DO UNIX}}}
+     \end{center}
+   \end{frame}
+  \subsection{Conhecendo o UNIX}    
+   \begin{frame}[t]{A Filosofia do UNIX}
+      De acordo com \cite{GM1995} a filosofia UNIX é formada por um conjunto de princípios:
+      \begin{itemize}
+	% A linha abaixo adiciona um espaço no beamer
+	\vspace{\baselineskip}
+	\uncover<2->
+	{\item Pequeno é belo}
+	\uncover<3->
+	{\item Construa programas que fazem uma coisa bem feita}
+	\uncover<4->
+	{\item Disponibilize uma versão protótipo o mais breve possível}
+	\uncover<5->
+	{\item Prefira portabilidade a eficiência}
+	\uncover<6->
+	{\item Armazene dados em arquivos simples, como arquivos do tipo texto}
+	\uncover<7->
+	{\item Use as funcionalidades disponíveis do sistema para tirar vantagem}
+	\uncover<8->
+	{\item Evite fazer programas engessados}
+	\uncover<9->
+	{\item Etc\dots}
+      \end{itemize}
+   \end{frame}
+
+   \begin{frame}[t]{A Filosofia do UNIX}
+      Segundo o ponto de vista de \cite{RES2003} as regras da filosofia UNIX obedecem aos seguintes princípios: 
+      \begin{itemize}
+	% A linha abaixo adiciona um espaço no beamer
+	\vspace{\baselineskip}
+	\uncover<2->
+	{\item \textbf{Regra da Modularidade:}\uncover<3-> { escreva peças simples conectadas por interfaces simples}}
+	\uncover<4->
+	{\item \textbf{Regra da Clareza:}\uncover<5-> { clareza é melhor que inteligência}}
+	\uncover<6->
+	{\item \textbf{Regra da Composição:}\uncover<7-> { construa programas para serem conectados com outros programas}}
+	\uncover<8->
+	{\item \textbf{Regra da Simplicidade:}\uncover<9-> { projete para simplicidade; adicione complexidade apenas onde é necessário}}
+	\uncover<10->
+	{\item \textbf{Regra da Transparência:}\uncover<11-> { projete de forma a dar visibilidade, para fazer do processo de depuração e inspeção \ 
+							     uma tarefa fácil}}
+      \end{itemize}
+   \end{frame}
+
+    \begin{frame}[t]{A Filosofia do UNIX}
+      Segundo o ponto de vista de \cite{RES2003} as regras da filosofia UNIX obedecem aos seguintes princípios: 
+      \begin{itemize}
+	% A linha abaixo adiciona um espaço no beamer
+	\vspace{\baselineskip}
+	\uncover<2->
+	{\item \textbf{Regra do Silêncio:}\uncover<3-> { quando um programa não tem nada surpreendente para dizer, ele não deve dizer nada}}
+	\uncover<4->
+	{\item \textbf{Regra do Reparo:}\uncover<5-> { quando é inevitável falhar, falhe ruidosamente e o mais cedo possível}}
+	\uncover<6->
+	{\item \textbf{Regra da Otimização:}\uncover<7-> { faça protótipo antes do refinamento. Coloque em funcionamento antes de ser otimizado}}
+	\uncover<8->
+	{\item \textbf{Regra da Diversidade:}\uncover<9-> { desconfie de todas as alegações sobre a existência de um ``modo correto de fazer as coisas''}}
+      \end{itemize}
+      % A linha abaixo adiciona um espaço no beamer
+      \vspace{\baselineskip}
+      \uncover<10->
+      {\textcolor{blue}{Para conhecer outras regras, consulte \cite{RES2003}}}
+   \end{frame}
+
+   \begin{frame}{A Filosofia do UNIX}
+      \centering
+      \begin{figure}
+	\includegraphics[scale=0.3]{../../../imagens/kiss}
+	\caption{\textit{Kiss Principle} \cite{SW2010}} 
+      \end{figure}
+   \end{frame}
+
+\section{Variantes do UNIX}
+  \begin{frame}
+     \begin{center}
+        \Large{\textcolor{green}{\textbf{VARIANTES DO UNIX}}}
+     \end{center}
+   \end{frame}
+  \subsection{Solaris, FreeBSD, Linux...}
+   \begin{frame}[t]{Variantes do UNIX}
+      Um consórcio da indústria que se formou em 1996, chamado \textbf{\textit{Open Group}}, propiciou o surgimento de diversas variantes do UNIX:
+      \begin{itemize}
+	\vspace{\baselineskip}
+	\uncover<2->
+        {\item Solaris da Sun Microsystems}
+	\uncover<3->
+	{\item A Família BSD}
+	\begin{itemize}
+	  \uncover<4->
+	  {\item FreeBSD}
+	  \uncover<5->
+	  {\item NetBSD}
+	  \uncover<6->
+	  {\item OpenBSD}
+	\end{itemize}
+      \only<7>
+      {\item \alert{e}}
+      \uncover<8->
+      {\item \textbf{Linux}}
+      \end{itemize}
+   \end{frame}
+
+    \begin{frame}[t]{Variantes do UNIX}
+      Dentre as variantes citadas, algumas estão de acordo com a especificação (mantida pela \textbf{\textit{Open Group}}) \
+      e outras apenas se comportavam como um sistema UNIX, afinal, por dentro possuíam características específicas \\
+      \vspace{\baselineskip}
+      \uncover<2->
+      {Neste sentido, existem dois grandes grupos de variantes UNIX:}
+      \begin{itemize}
+	\uncover<3->
+        {\item Aqueles em acordo com a \textit{Single UNIX Specification}}
+	\uncover<4->
+	{\item Os clones}
+	\begin{itemize}
+	  \vspace{\baselineskip}
+	  \uncover<5->
+	  {\item Um programa clone possui funções similares a outro programa, porém tem um código-fonte totalmente diferente}
+	\end{itemize}
+      \end{itemize}
+      \vspace{\baselineskip}
+      \uncover<6->
+      {\textbf{Unix-like:} termo utilizado para descrever Sistemas Operacionais descendentes dessas variantes}
+   \end{frame}
+
+   \begin{frame}[t]{Variantes do UNIX}
+      \begin{figure}
+	\includegraphics[scale=0.32]{../../../imagens/unix-like-family}
+	\caption{Família Unix-like} 
+      \end{figure}
+   \end{frame}
+
+\section{Linux}
+  \begin{frame}
+     \begin{center}
+        \Large{\textcolor{green}{\textbf{LINUX}}}
+     \end{center}
+   \end{frame}
+  \subsection{A História do Linux}
+   \begin{frame}{Linux}
+      \alert{Li}nux \alert{n}ão é \alert{U}NI\alert{X}!
+      \centering
+      \begin{figure}
+	\includegraphics[scale=0.5]{../../../imagens/linustovarlds}
+	\caption{\textbf{Linus Tovarlds:} o Criador do Linux} 
+      \end{figure}
+   \end{frame}
+
+   \begin{frame}[t]{Linux}
+      O \textbf{Linux} foi desenvolvido em conformidade com o POSIX, um padrão para a construção de Sistemas Operacionais criado para normatizar o UNIX \\
+      \vspace{\baselineskip}
+      \textcolor{blue}{Mas qual é a vantagem disso?}
+      \begin{itemize}
+	\vspace{\baselineskip}
+	\uncover<2->
+	{\item O Linux funciona em centenas de arquiteturas diferentes}
+	\uncover<3->
+	{\item É compatível com a maioria dos \textit{softwares} disponíveis para UNIX}
+      \end{itemize}
+      \uncover<4->
+      {\begin{block}{A primeira versão do Linux}
+	\centering
+	A versão 0.01 do Linux tinha somente um desenvolvedor (\textcolor{blue}{advinha quem?}) e aproximadamente dez mil linhas de código na linguagem C. Os códigos \ 
+        somavam alguns quilobytes (KB) 
+      \end{block}}
+   \end{frame}
+
+   \begin{frame}[t]{Linux}
+      O \textbf{Linux} foi desenvolvido em conformidade com o POSIX, um padrão para a construção de Sistemas Operacionais criado para normatizar o UNIX \\
+      \vspace{\baselineskip}
+      \textcolor{blue}{Mas qual é a vantagem disso?}
+      \begin{itemize}
+	\vspace{\baselineskip}
+	\uncover<2->
+	{\item O Linux funciona em centenas de arquiteturas diferentes}
+	\uncover<3->
+	{\item É compatível com a maioria dos \textit{softwares} disponíveis para UNIX}
+      \end{itemize}
+      \uncover<4->
+      {\begin{exampleblock}{As versões atuais do Linux}
+ 	\centering
+ 	O Linux hoje conta com uma comunidade gigante de desenvolvedores e possui milhões de linhas de código. Os códigos \ 
+         somam algumas centenas de megabytes (MB) 
+      \end{exampleblock}}
+   \end{frame}
+
+
+    \begin{frame}[t]{Vantagens do Linux}
+      Segundo \cite{SW2010}, as principais vantagens do Linux são: 
+      \begin{itemize}
+	% A linha abaixo adiciona um espaço no beamer
+	\vspace{\baselineskip}
+	\uncover<2->
+	{\item \textbf{Gratuito:}\uncover<3-> { ser gratuito significa que o usuário não terá nenhum ônus para baixar e instalar o sistema completo}}
+	\uncover<4->
+	{\item \textbf{Comunidade:}\uncover<5-> { a comunidade do Linux é muito grande. É mais fácil você encontrar usando Linux do que qualquer outro \
+						  sistema proprietário}}
+	\uncover<6->
+	{\item \textbf{Estável:}\uncover<7-> { o Linux foi feito para nunca parar. Algumas configurações podem ser ativadas sem a necessidade de reinicialização \
+                                               do ambiente}}
+	\uncover<8->
+	{\item \textbf{Seguro:}\uncover<9-> { o modelo de segurança do Linux é amplamente reconhecido por sua robustez e qualidade comprovada}}
+      \end{itemize}
+   \end{frame}
+
+    \begin{frame}[t]{Vantagens do Linux}
+      Segundo \cite{SW2010}, as principais vantagens do Linux são: 
+      \begin{itemize}
+	% A linha abaixo adiciona um espaço no beamer
+	\vspace{\baselineskip}
+	\uncover<2->
+	{\item \textbf{Portável:}\uncover<3-> { basta o fabricante realizar alguns ajustes no \textit{kernel} do Linux para funcionar em seu \
+                                                \textit{hardware}}}
+	\uncover<4->
+	{\item \textbf{Escalável:}\uncover<5-> { a característica do Linux (\textit{kernel} + \textit{software}) faz com que ele funcione em um \
+						 simples dispositivo móvel e até mesmo em supercomputadores}}
+	\uncover<6->
+	{\item \textbf{Antivírus:}\uncover<7-> { o sistema de permissões nativo do Linux é suficiente para protegê-lo de ameaças e vírus}}
+	\uncover<8->
+	{\item \textbf{Flexível:}\uncover<9-> { o Linux é o sistema mais flexível que existe. Como o seu código fonte é livre, as personalizações \
+						são ``ilimitadas''}}
+      \end{itemize}
+   \end{frame}
+ 
+\section{O Projeto GNU}
+  \begin{frame}
+     \begin{center}
+        \Large{\textcolor{green}{\textbf{O PROJETO GNU}}}
+     \end{center}
+   \end{frame}
+  \subsection{GNU is Not UNIX}
+   \begin{frame}[t]{Projeto GNU}
+      \centering
+      O nome do projeto foi uma brincadeira irônica dos programadores da época. \\
+      \vspace{\baselineskip}
+      \uncover<2->
+      {\textbf{GNU} é um acrônimo para "\alert{G}NU is \alert{N}ot \alert{U}NIX"}
+      \uncover<3->
+      {\begin{figure}
+	\includegraphics[scale=0.2]{../../../imagens/simboloGNU}
+	\caption{Símbolo do projeto GNU}
+      \end{figure}}
+      \uncover<4->
+      {\begin{center}
+	 \textcolor{blue}{Todo programa livre acompanhado do código-fonte era um GNU}
+       \end{center}}
+   \end{frame}
+
+    \begin{frame}[t]{O Projeto GNU}
+      A ideia do projeto GNU consistia em:
+      \begin{itemize}
+	% A linha abaixo adiciona um espaço no beamer
+	\vspace{\baselineskip}
+	\uncover<2->
+	{\item Construir um Sistema Operacional como o UNIX, que oferecesse somente programas livres e que fossem suficientes para substituírem qualquer \
+	       sistema não livre, no caso o próprio UNIX}
+	\uncover<3->
+	{\begin{itemize}
+	 \item \alert{A partir da versão 7 o UNIX fechou o acesso ao código-fonte}
+	\end{itemize}}
+	\uncover<4->
+	{\begin{figure}
+	  \includegraphics[scale=0.37]{../../../imagens/stallman}
+	  \caption{Richard M. Stallman: o criador do projeto GNU}
+	\end{figure}}
+      \end{itemize}
+   \end{frame}
+ 
+\section{Free Software Foundation}
+  \begin{frame}
+     \begin{center}
+        \Large{\textcolor{green}{\textbf{FREE SOFTWARE FOUNDATION}}}
+     \end{center}
+   \end{frame}
+  \subsection{Protegendo a liberdade}
+    \begin{frame}[t]{\textit{Free Software Foundation}}
+      \uncover<2->
+      {A \textit{Free Software Foundation} (FSF) ou "Fundação para o \textit{Software} Livre", em português, trata-se de uma organização sem fins lucrativos \
+      para promover e defender a liberdade de usuários de \textit{software} livre \\}
+      \vspace{\baselineskip}
+      \uncover<3->
+      {A FSF foi criada também por \textbf{Richard M. Stallman} e teve como propósito angariar fundos para o financiamento de projetos, tal como o \
+      projeto GNU \\}
+      \vspace{\baselineskip}
+      \uncover<4->
+      {Para garantir as liberdades dos \textit{softwares}, a FSF precisava de um documento formal e, para tanto, foi criada uma licença chamada GNU GPL \\}
+      \vspace{\baselineskip}
+      \uncover<5->
+      {\textcolor{blue}{Vejamos o que ela define\dots}}
+   \end{frame}
+
+    \begin{frame}[t]{\textit{Free Software Foundation}}
+      A licença GNU GPL (\textit{General Public Lincense}), em linhas gerais, fornece quatro liberdades:
+      \begin{enumerate}
+	% A linha abaixo adiciona um espaço no beamer
+	\vspace{\baselineskip}
+	\uncover<2->
+	{\item Liberdade de executar o programa para qualquer propósito}
+	\uncover<3->
+	{\item Liberdade de estudar como o programa funciona e adaptá-lo às suas necessidades}
+	\uncover<4->
+	{\item Liberdade de redistribuir cópias de modo que você possa ajudar o seu próximo}
+	\uncover<5->
+	{\item Liberdade de melhorar o programa e liberar os seus melhoramentos, de modo que toda a comunidade se beneficie deles}
+      \end{enumerate}
+   \end{frame}
+
+\section{Referências}
+  \subsection{Bibliografia}
+  \begin{frame}[t]{Referências Bibliográficas}
+    \bibliographystyle{abnt-alf}
+    \bibliography{/home/douglas/Dropbox/Referencias/referencias}
+  \end{frame}
+
+\end{document}
